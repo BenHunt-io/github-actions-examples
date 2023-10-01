@@ -7,3 +7,4 @@ jobs:
     steps:
       - run: ls -lah
       - run: aws help
+      - run: docker

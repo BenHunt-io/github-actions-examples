@@ -64,7 +64,7 @@ async function startNewDatabaseContainer(){
     });
 
     // wait for image to be created
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 15000));
     console.log("creating container from image")
 
      let container = await docker.createContainer({

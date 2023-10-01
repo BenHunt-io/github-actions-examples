@@ -20,10 +20,9 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Run tests
-        working-directory: ./examples/dynamo-docker-example
-        run: ls
-        run: npm --version
-        run: pnpm --version
-        run: pnpm install
-        run: pnpm test
+      - working-directory: ./examples/dynamo-docker-example
+      - run: ls
+      - run: npm --version
+      - run: pnpm --version
+      - run: pnpm install
+      - run: pnpm test

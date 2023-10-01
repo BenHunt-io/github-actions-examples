@@ -4,7 +4,8 @@ on: [push]
 jobs:
   hello-docker-job:
     runs-on: ubuntu-latest
+    container: amazon/dynamodb-local:latest
     steps:
-      - run: ls -lah
-      - run: aws help
-      - run: docker
+      - run: docker ps -a
+      - run: docker container ls -a
+      - run: aws dynamodb list-tables

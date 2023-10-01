@@ -1,23 +1,4 @@
-name: learn-github-actions-docker
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+name: learn-github-actions
 jobs:
-  hello-docker-job:
-    runs-on: ubuntu-latest
-    services:
-      dynamodb:
-        image: amazon/dynamodb-local:latest
-        ports:
-          - 8000:8000
-    permissions:
-      id-token: write # This is required for requesting the JWT
-    steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::605836753444:role/DynamoDbGithubAccess
-          aws-region: us-east-1
-      - run: docker ps
-      - run: docker container ls
-      - run: sleep 1 # wait for container to finish starting
-      - run: aws --endpoint-url http://localhost:8000 dynamodb list-tables
+  call-workflow:
+    uses: BenHunt-io/github-actions-examples/examples/hello-docker/hello-docker-dynamo.yml

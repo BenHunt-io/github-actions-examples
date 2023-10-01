@@ -1,7 +1,5 @@
 name: learn-github-actions-docker
 run-name: ${{ github.actor }} is learning GitHub Actions
-name: learn-github-actions-docker
-run-name: ${{ github.actor }} is learning GitHub Actions
 on: [push]
 jobs:
   hello-docker-job:
@@ -21,4 +19,5 @@ jobs:
           aws-region: us-east-1
       - run: docker ps
       - run: docker container ls
+      - run: sleep 1 # wait for container to finish starting
       - run: aws --endpoint-url http://localhost:8000 dynamodb list-tables

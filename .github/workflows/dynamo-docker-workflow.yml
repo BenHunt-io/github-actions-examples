@@ -16,5 +16,8 @@ jobs:
         with:
           node-version: '18.15.0'
       - run: cd examples/dynamo-docker-example
+      - run: ls
+      - run: npm --version
+      - run: pnpm --version
       - run: pnpm install
       - run: pnpm test

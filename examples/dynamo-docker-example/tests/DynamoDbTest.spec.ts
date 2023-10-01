@@ -57,8 +57,18 @@ async function startNewDatabaseContainer(){
     let startTime = new Date().getTime();
     let docker = new Dockerode({socketPath: "/var/run/docker.sock"});
 
+    console.log("creating image")
+    await docker.createImage({
+        fromImage: "amazon/dynamodb-local:latest"
+        
+    });
+
+    // wait for image to be created
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log("creating container from image")
+
      let container = await docker.createContainer({
-        Image: 'amazon/dynamodb-local',
+        Image: 'amazon/dynamodb-local:latest',
         AttachStdout: true,
         AttachStderr: true,
         ExposedPorts: {

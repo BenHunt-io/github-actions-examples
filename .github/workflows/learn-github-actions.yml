@@ -1,4 +1,0 @@
-name: learn-github-actions
-jobs:
-  call-workflow:
-    uses: ../examples/hello-docker/hello-docker-dynamo.yml@main

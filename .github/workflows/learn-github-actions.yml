@@ -4,7 +4,11 @@ on: [push]
 jobs:
   hello-docker-job:
     runs-on: ubuntu-latest
-    container: amazon/dynamodb-local:latest
+    services:
+      dynamodb:
+        image: amazon/dynamodb-local:latest
+        ports:
+          - 8000:8000
     steps:
       - run: docker ps -a
       - run: docker container ls -a

@@ -1,0 +1,19 @@
+name: learn-github-actions-docker
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+jobs:
+  hello-docker-job:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write # This is required for requesting the JWT
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.15.0'
+      - run: cd examples/dynamo-docker-example
+      - run: pnpm test

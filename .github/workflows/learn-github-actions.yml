@@ -12,4 +12,5 @@ jobs:
     steps:
       - run: docker ps -a
       - run: docker container ls -a
+      - run: aws dynamodb list-tables help
       - run: aws --endpoint-url http://localhost:8000 dynamodb list-tables

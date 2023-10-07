@@ -4,13 +4,33 @@ on: [push]
 jobs:
   hello-docker-job:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+    steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::605836753444:role/DynamoDbGithubAccess
           aws-region: us-east-1
-      - run: docker pull amazon/dynamodb-local:latest
-      - run: docker image ls
-      - run: docker run -d -p8000:8000 amazon/dynamodb-local:latest
-      - run: sleep 1
-      - run: aws dynamodb --endpoint "http://localhost:8000" list-tables
+      - name: Cache dynamo docker image
+        id: cache-docker-image
+        uses: actions/cache@v3
+        with:
+          path: /docker-cache
+          key: universal-key
+      - if: ${{ steps:.cache-docker-image.outputs.cache-hit != 'true' }}
+        run: | 
+          echo "Cache Miss!"
+          mkdir -p /docker-cache
+          docker pull amazon/dynamodb-local:latest
+          docker image save --output /docker-cache/img
+      - if: ${{ steps:.cache-docker-image.outputs.cache-hit == 'true' }}
+        run: |
+          echo "Cache Hit!"
+      - run: docker image load --input /docker-cache/img
+      - name: Run docker image
+        run: |
+          docker run -d -p8000:8000 amazon/dynamodb-local:latest
+          sleep 1
+          aws dynamodb --endpoint "http://localhost:8000" list-tables
+      

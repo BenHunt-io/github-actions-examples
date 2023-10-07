@@ -18,13 +18,13 @@ jobs:
         with:
           path: /docker-cache
           key: universal-key
-      - if: ${{ steps:.cache-docker-image.outputs.cache-hit != 'true' }}
+      - if: ${{ steps.cache-docker-image.outputs.cache-hit != 'true' }}
         run: | 
           echo "Cache Miss!"
           mkdir -p /docker-cache
           docker pull amazon/dynamodb-local:latest
           docker image save --output /docker-cache/img
-      - if: ${{ steps:.cache-docker-image.outputs.cache-hit == 'true' }}
+      - if: ${{ steps.cache-docker-image.outputs.cache-hit == 'true' }}
         run: |
           echo "Cache Hit!"
       - run: docker image load --input /docker-cache/img
